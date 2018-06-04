@@ -3,11 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;   
 
 /**
  * Ontvangenoederen
  *
- * @ORM\Table(name="ontvangengoederen")
+ * @ORM\Table(name="ontvangstmelding")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OntvangenGoederenRepository")
  */
 class OntvangenGoederen
@@ -38,8 +39,6 @@ class OntvangenGoederen
      * @var int
      *
      * @ORM\Column(name="artikelnummer", type="integer", unique=true)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
  
     private $artikelnummer;
@@ -58,7 +57,31 @@ class OntvangenGoederen
      */
     private $leverancier;
 
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="ontvangen", type="string", length=100)
+    */
 
+    private $ontvangen;
+
+    /**
+    * @var int
+    *
+     * @ORM\Column(name="ontvangstnummer", type="integer", unique=true)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $ontvangstnummer;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Artikel", inversedBy="goederenopdracht", cascade={"persist"})
+     */
+    private $ontvangenartikelen;
+
+    public function __construct(){
+        $this->ontvangengoederen = new ArrayCollection();
+    }
 
     /**
      * Set datumontvangst
@@ -202,6 +225,53 @@ class OntvangenGoederen
     public function getLeverancier()
     {
         return $this->leverancier;
+    }
+
+    /**
+    * Set ontvangen
+    *
+    * @param string $ontvangen
+    *
+    * @return Ontvangengoederen
+    */
+    public function setOntvangen ($ontvangen)
+    { 
+        $this->ontvangen = $ontvangen;
+
+        return $this; }
+
+    /**
+    * Get ontvangen
+    *
+    * @return string
+    */
+    public function getOntvangen()
+    {
+        return $this->ontvangen;
+    }
+
+        /**
+     * Set ontvangstnummer
+     *
+   /  * @param integer $ontvangstnummer
+     *
+     * @return Ontvangengoederen
+     */
+    //public function setOntvangstnummer($ontvangstnummer)
+    //{
+      //  $this->ontvangstnummer = $ontvangstnummer;
+
+       // return $this;
+    //}
+
+        /**
+     * Get ontvangstnummer
+     *
+     * @return int
+     */
+    public function getOntvangstnummer()
+    {
+        return $this->ontvangstnummer;
     }
 }
 

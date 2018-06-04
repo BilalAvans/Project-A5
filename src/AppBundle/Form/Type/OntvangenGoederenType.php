@@ -10,13 +10,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 //EntiteitType vervangen door b.v. KlantType
 class OntvangenGoederenType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
- 
+        $builder
+          ->add('artikelnummer', EntityType::class, array(
+            'class'=> 'AppBundle:Artikel',
+            'choice_label' => 'artikelnummer', 'expanded' => false,  'multiple' => true));
+        //$builder
+          // ->add('ontvangstnummer', TextType::class); 
         $builder
             ->add('datumontvangst', DateType::class); 
         $builder
@@ -24,11 +30,12 @@ class OntvangenGoederenType extends AbstractType
         $builder
             ->add('kwaliteit', TextType::class);
         $builder
-            ->add('artikelnummer', IntegerType::class);
-        $builder
             ->add('omschrijving', TextType::class);
         $builder
-            ->add('leverancier', TextType::class);       
+            ->add('leverancier', TextType::class);
+        $builder
+            ->add('ontvangen', TextType::class);
+      
 
                                                                                        	 
 		//zie
